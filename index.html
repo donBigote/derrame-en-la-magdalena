@@ -1,1 +1,719 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.20.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.20.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+</head>
+<body>
 
+<style>
+#map {
+    position: fixed;
+    width:50%;
+}
+#features {
+    width: 50%;
+    margin-left: 50%;
+    font-family: sans-serif;
+    overflow-y: scroll;
+    background-color: #fafafa;
+}
+
+#style_menu {
+        position: absolute;
+        background: rgba(0,0,0,0.25);
+        padding: 10px;
+        font-family: 'Open Sans', sans-serif;
+        z-index: 100;
+    }
+
+
+#menu {
+        background: #fff;
+
+        z-index: 1;
+        top: 10px;
+        right: 10px;
+        border-radius: 3px;
+        width: 200px;
+        border: 1px solid rgba(0,0,0,0.4);
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    #menu a {
+        font-size: 13px;
+        color: #404040;
+        display: block;
+        margin: 0;
+        padding: 0;
+        padding: 10px;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(0,0,0,0.25);
+        text-align: center;
+    }
+
+    #menu a:last-child {
+        border: none;
+    }
+
+    #menu a:hover {
+        background-color: #f8f8f8;
+        color: #404040;
+    }
+
+    #menu a.active {
+        background-color: #3887be;
+        color: #ffffff;
+    }
+
+    #menu a.active:hover {
+        background: #3074a4;
+    }
+section {
+    padding:  25px 50px;
+    line-height: 25px;
+    border-bottom: 1px solid #ddd;
+    opacity: 0.25;
+    font-size: 13px;
+}
+section.active {
+    opacity: 1;
+}
+section:last-child {
+    border-bottom: none;
+    margin-bottom: 200px;
+}
+
+
+
+</style>
+
+<div id='map'>
+    <!--<div id='style_menu'>
+        <input id='outdoors' type='radio' name='rtoggle' value='outdoors' checked='checked'>
+        <label for='outdoors'>Mapa Basico</label>
+        <input id='satellite-streets' type='radio' name='rtoggle' value='satellite-streets'>
+        <label for='satellite-streets'>Imágen satelital</label>
+    </div>-->
+</div>
+
+<div id='features'>
+    <section id='plant' class='active'>
+        <h1>Derrame de Melaza La Magdalena</h1>
+        <hr>
+        <p>Mapa del derrame de melaza en el rio Magdalena el 5 de de mayo de 2016 en Chalchuapa</p>
+        <h3>Ingenio La Magdalena</h3>
+        <p>El derrame inició en el Ingenio La Magdalena ubicado en el municipio Chalchuapa.</p>
+        <p>
+            <img src="http://www.marn.gob.sv/wp-content/uploads/IMG_974.jpg" style="width:500px">
+            <br />
+            <small>El triangulo en el mapa a la izquierda indica la ubicación donde fue tomada esta foto. (Fuente <a href="http://www.marn.gob.sv/fuga-de-melaza-en-ingenio-la-magdalena-afecta-a-rio/" target="blank">MARN</a>)</small>
+        </p>
+        <p>
+            "Un tractor intentó hacer una borda de tierra para detener la melaza al interior del ingenio, pero alrededor de las 9:00 de la noche de ayer jueves, la masa caliente y viscosa sobrepasó la borda y se fue hacia el rio Magdalena." -MARN, <a href="http://www.marn.gob.sv/fuga-de-melaza-en-ingenio-la-magdalena-afecta-a-rio/" target="blank">Emergencia Ambiental La Magdalena, Chalchuapa</a>
+        </p>
+        <!--<p>
+            <img src="http://www.marn.gob.sv/wp-content/uploads/WhatsApp-Image-20160506.jpeg" style="width:250px">
+            <br />
+            <small>The red marker on the map indicates the location of this foto.</small>
+        </p>-->
+    </section>
+    <section id='overview'>
+        <h3>Alcance del Impacto</h3>
+        <p>Puede haber impactos desde el río Magdalena hasta el Pacífico por medio de las siguiente desembocaduras: 
+            <ul>
+                <li>rio Magdalena</li>
+                <li>rio Guevapa</li> 
+                <li>rio Chingo</li> 
+                <li>rio Guevapa Pampe</li> 
+                <li>rio Chalchuapa</li> 
+                <li>rio Paz</li> 
+            </ul>
+            Incluso el Zanjón El Aguacate que desemboca en la Bocana Garita Palmera puede ser afectado. 
+        </p>
+        <p>
+            El alcance pudiera afectar a 8 municipios de El Salvador, entre ellos: 
+            <ul>
+                <li>Chalchuapa</li>
+                <li>El Porvenir</li> 
+                <li>El Refugio</li>
+                <li>Atiquizaya</li>
+                <li>San Lorenzo</li> 
+                <li>Ahuachapán</li> 
+                <li>Tacuba</li>
+                <li>San Francisco Menéndez</li>
+            </ul>
+        </p>
+    </section>
+    <section id='severe'>
+        <h3>Los Daños mas Severos</h3>
+        <p>
+            "El derrame de melaza ocasionó una disminución de la calidad del agua y daños en gran magnitud sobre la biodiversidad acuática, afectando a 29 especies entre ellas el Pez Machorra o Pez Lagarto, considerado especie en peligro de extinción.
+        </p>
+        <p>
+            El informe señala que las afectaciones ocasionaron un <strong>100% de eliminación de especies en los primeros 12 kilómetros del río La Magdalena</strong>, partiendo desde el punto donde ocurrió el derrame, y del 40% en el resto de tramos del cauce. El volumen estimado de las afectaciones en la fauna acuática asciende a 19 toneladas." - MARN <a href="http://www.marn.gob.sv/marn-denuncia-a-ingenio-la-magdalena-por-contaminacion-de-rio/" target="blank">MARN denuncia a Ingenio La Magdalena por contaminación de río</a>
+        </p>
+        <p>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/yxexE_oogug" frameborder="0" allowfullscreen></iframe>
+            <br />
+            <small>Fuente: Víctor Peña y Carla Ascencio, <a href="http://www.elfaro.net/es/201606/video/18743/La-tragedia-de-La-Magdalena.htm" target="blank">El Faro</a></small>
+        </p>
+    </section>
+    <section id='ecosystems'>
+        <h3>80 km de Ecosistemas en Peligro</h3>
+        <p>
+            La sociedad Ingenio La Magdalena, S.A. de C.V. confirma que <strong>250 mil galones de melaza se derramaron y que unos 9 mil llegaron hasta el río</strong>. Esos ecosistemas están en peligro de colapso. Este representa no solo una amenza para el medio ambiente sino también un problema para la población que depende directamente de los ríos afectados.
+        </p>
+        <img src="http://www.elfaro.net/get_img?ImageWidth=1000&ImageHeight=750&ImageId=24744" style="width:500px">
+        <br />
+        <small>Fuente: Nelson Rauda Zablah y Víctor Peña, <a href="http://www.elfaro.net/es/201606/el_salvador/18735/El-r%C3%ADo-de-melaza-que-vale-$39-millones.htm" target="blank">El Faro</a></small>
+    </section>
+    <section id='livelihoods'>
+        <h3>Medios de Vida en la Zona</h3>
+        <p>
+            Según MARN, "Los medios de vida afectados directamente se relacionan con la pesca artesanal y el turismo local. Registros municipales indican 950 pescadores artesanales a lo largo de los 80 kilómetros del cauce afectado." - MARN, <a href="http://www.marn.gob.sv/marn-denuncia-a-ingenio-la-magdalena-por-contaminacion-de-rio/" target="blank">MARN denuncia a Ingenio La Magdalena por contaminación de río</a>
+        </p>
+
+        <img src="https://scontent-mia1-1.xx.fbcdn.net/t31.0-8/p720x720/13235321_1175033962517887_5588026932686263459_o.jpg" style="width:500px">
+        <br />
+        <small>Fuente: <a href="http://www.marn.gob.sv/marn-denuncia-a-ingenio-la-magdalena-por-contaminacion-de-rio/" target="blank">MARN</a></small>
+
+    </section>
+    <section id='last'>
+        <h3>Municipios</h3>
+        <p>Utiliza los controles abajo para agregar información de municipios.</p>
+        <div id='menu'></div>
+    </section>
+</div>
+
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiZG9uYmlnb3RlIiwiYSI6Im1zaWFMajQifQ.esvQBm0Rouqn9YxsNxsW4A';
+
+var map = new mapboxgl.Map({
+    container: 'map',
+    //style: 'mapbox://styles/mapbox/light-v9',
+    //style: 'mapbox://styles/mapbox/outdoors-v9',
+    style: 'mapbox://styles/donbigote/ciq2he04a000caymaz444dhuh',
+    center: [-89.695948, 14.043663], 
+    zoom: 16.3,
+    bearing: 27
+});
+
+var chapters = {
+    'plant': {
+        bearing: 27,
+        center: [-89.695948, 14.043663],
+        zoom: 16.3,
+        pitch: 20
+    },
+    'overview': {
+        duration: 6000,
+        //center: [-89.722790, 14.001817],
+        center: [-89.817091, 13.949457], 
+        bearing: -140,
+        zoom: 10.3,
+        pitch: 55
+    },
+    'severe': {
+        center: [-89.694464, 14.020356],
+        //center: [-89.678640, 14.036038],
+        zoom: 12.8,
+        speed: 0.2,
+        bearing: -50,
+        pitch: 40
+    },
+    'ecosystems': {
+        bearing: 90,
+        center: [-89.811588, 14.005870],
+        zoom: 11.5,
+        speed: 0.2
+    },
+    'livelihoods': {
+        bearing: 90,
+        center: [-89.922291, 13.844969],
+        zoom: 9.8,
+        pitch: 20,
+        speed: 0.5
+    },
+    'last': {
+        center: [-89.876245, 13.890391], 
+        bearing: 360,
+        speed: 0.2,
+        zoom: 9 
+    }
+};
+
+
+// On every scroll event, check which element is on screen
+window.onscroll = function() {
+    var chapterNames = Object.keys(chapters);
+    for (var i = 0; i < chapterNames.length; i++) {
+        var chapterName = chapterNames[i];
+        if (isElementOnScreen(chapterName)) {
+            setActiveChapter(chapterName);
+            break;
+        }
+    }
+};
+
+var activeChapterName = 'baker';
+function setActiveChapter(chapterName) {
+    if (chapterName === activeChapterName) return;
+
+    map.flyTo(chapters[chapterName]);
+
+    document.getElementById(chapterName).setAttribute('class', 'active');
+    document.getElementById(activeChapterName).setAttribute('class', '');
+
+    activeChapterName = chapterName;
+}
+
+function isElementOnScreen(id) {
+    var element = document.getElementById(id);
+    var bounds = element.getBoundingClientRect();
+    return bounds.top < window.innerHeight && bounds.bottom > 0;
+}
+
+//  Rio Magdalena Guevapa Tileset
+map.on('load', function () {
+    map.addSource('rio_magdalena_guevapa', {
+        type: 'vector',
+        url: 'mapbox://donbigote.5yu4e0w8'
+    });
+    map.addLayer({
+        "id": "rio_magdalena_guevapa",
+        "source": "rio_magdalena_guevapa",
+        "source-layer": "rio_magdalena_guevapa",
+        'type': 'line',
+        'layout': {
+            'visibility': 'visible',
+            'line-join': 'miter',
+            'line-miter-limit': 1
+        },
+        'paint': {
+            'line-color': "red",
+            'line-width': 2
+        }
+    });
+});
+// Rio Chingo Paz Tileset
+map.on('load', function () {
+    map.addSource('rio_chingo_paz', {
+        type: 'vector',
+        url: 'mapbox://donbigote.45rrleod'
+    });
+    map.addLayer({
+        "id": "rio_chingo_paz",
+        "source": "rio_chingo_paz",
+        "source-layer": "rio_chingo_paz",
+        'type': 'line',
+        'layout': {
+            'visibility': 'visible'
+        },
+        'paint': {
+            'line-color': "orange",
+            'line-width': 2
+        }
+    });
+});
+
+// Rio Paz Small Tileset
+map.on('load', function () {
+    map.addSource('rio_paz_small', {
+        type: 'vector',
+        url: 'mapbox://donbigote.63m07cc5'
+    });
+    map.addLayer({
+        "id": "rio_paz_small",
+        "source": "rio_paz_small",
+        "source-layer": "rio_paz_small",
+        'type': 'line',
+        'layout': {
+            'visibility': 'visible'
+        },
+        'paint': {
+            'line-color': "orange",
+            'line-width': 2
+        }
+    });
+});
+
+// Zanjon Aguacate Tileset
+map.on('load', function () {
+    map.addSource('zanjon_aguacate', {
+        type: 'vector',
+        url: 'mapbox://donbigote.9957oicw'
+    });
+    map.addLayer({
+        "id": "zanjon_aguacate",
+        "source": "zanjon_aguacate",
+        "source-layer": "zanjon_aguacate",
+        'type': 'line',
+        'layout': {
+            'visibility': 'visible'
+        },
+        'paint': {
+            'line-color': "orange",
+            'line-width': 2
+        }
+    });
+});
+
+//  Rio La Paz Tileset
+map.on('load', function () {
+    map.addSource('rio_la_paz', {
+        type: 'vector',
+        url: 'mapbox://donbigote.cyixbvx4'
+    });
+    map.addLayer({
+        "id": "rio_la_paz",
+        "source": "rio_la_paz",
+        "source-layer": "rio_la_paz",
+        'type': 'fill',
+        'layout': {
+            'visibility': 'visible'
+        },
+        'paint': {
+            'fill-color': "orange",
+            'fill-outline-color': "orange",
+            'fill-opacity': 1
+        }
+    });
+});
+
+map.on('load', function () {
+
+    // add geojson data as a new source
+    map.addSource("symbols", {
+        "type": "geojson",
+        "data": {
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "type": "Feature",
+                    "properties": {},
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            -89.694811,
+                            14.042520
+                        ]
+                    }
+                }
+            ]
+        }
+    });
+
+    // add source as a layer and apply some styles
+    map.addLayer({
+        "id": "symbols",
+        "type": "symbol",
+        "source": "symbols",
+        "layout": {
+            "icon-image": "triangle-15"
+        },
+        "paint": {
+            'icon-color': 'pink'
+        }
+    });
+});
+
+// San Francisco Menendez Tileset
+map.on('load', function () {
+    map.addSource('san_fran_men', {
+        type: 'vector',
+        url: 'mapbox://donbigote.77ab5f21'
+    });
+    map.addLayer({
+        "id": "san_fran_men",
+        "source": "san_fran_men",
+        "source-layer": "san_fran_men",
+        'type': 'fill',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'fill-color': "#08f3f7",
+            'fill-outline-color': "black",
+            'fill-opacity': 0.45
+        }
+    });
+});
+
+// Tacuba Tileset
+map.on('load', function () {
+    map.addSource('tacuba', {
+        type: 'vector',
+        url: 'mapbox://donbigote.a9s5o2wb'
+    });
+    map.addLayer({
+        "id": "tacuba",
+        "source": "tacuba",
+        "source-layer": "tacuba",
+        'type': 'fill',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'fill-color': "#08f3f7",
+            'fill-outline-color': "black",
+            'fill-opacity': 0.45
+        }
+    });
+});
+
+// Ahuachapan Tileset
+map.on('load', function () {
+    map.addSource('ahuachapan', {
+        type: 'vector',
+        url: 'mapbox://donbigote.199c5zdy'
+    });
+    map.addLayer({
+        "id": "ahuachapan",
+        "source": "ahuachapan",
+        "source-layer": "ahuachapan",
+        'type': 'fill',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'fill-color': "#08f3f7",
+            'fill-outline-color': "black",
+            'fill-opacity': 0.45
+        }
+    });
+});
+
+// San Lorenzo Tileset
+map.on('load', function () {
+    map.addSource('san_lorenzo', {
+        type: 'vector',
+        url: 'mapbox://donbigote.1mja14c9'
+    });
+    map.addLayer({
+        "id": "san_lorenzo",
+        "source": "san_lorenzo",
+        "source-layer": "san_lorenzo",
+        'type': 'fill',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'fill-color': "#08f3f7",
+            'fill-outline-color': "black",
+            'fill-opacity': 0.45
+        }
+    });
+});
+
+//  Atiquizaya Tileset
+map.on('load', function () {
+    map.addSource('atiquizaya', {
+        type: 'vector',
+        url: 'mapbox://donbigote.2l840dnj'
+    });
+    map.addLayer({
+        "id": "atiquizaya",
+        "source": "atiquizaya",
+        "source-layer": "atiquizaya",
+        'type': 'fill',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'fill-color': "#08f3f7",
+            'fill-outline-color': "black",
+            'fill-opacity': 0.45
+        }
+    });
+});
+
+//  El Refugio Tileset
+map.on('load', function () {
+    map.addSource('el_refuigio', {
+        type: 'vector',
+        url: 'mapbox://donbigote.4gc751ca'
+    });
+    map.addLayer({
+        "id": "el_refuigio",
+        "source": "el_refuigio",
+        "source-layer": "el_refuigio",
+        'type': 'fill',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'fill-color': "#08f3f7",
+            'fill-outline-color': "black",
+            'fill-opacity': 0.45
+        }
+    });
+});
+
+//  Chalchuapa Tileset
+map.on('load', function () {
+    map.addSource('chalchuapa', {
+        type: 'vector',
+        url: 'mapbox://donbigote.5ndprnq6'
+    });
+    map.addLayer({
+        "id": "chalchuapa",
+        "source": "chalchuapa",
+        "source-layer": "chalchuapa",
+        'type': 'fill',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'fill-color': "#08f3f7",
+            'fill-outline-color': "black",
+            'fill-opacity': 0.45
+        }
+    });
+});
+
+//  El Porvenir Tileset
+map.on('load', function () {
+    map.addSource('el_porvenir', {
+        type: 'vector',
+        url: 'mapbox://donbigote.9yfr6ida'
+    });
+    map.addLayer({
+        "id": "el_porvenir",
+        "source": "el_porvenir",
+        "source-layer": "el_porvenir",
+        'type': 'fill',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'fill-color': "#08f3f7",
+            'fill-outline-color': "black",
+            'fill-opacity': 0.45
+        }
+    });
+});
+
+addLayer('San Francisco Menéndez', 'san_fran_men');
+addLayer('Tacuba', 'tacuba');
+addLayer('Ahuachapán', 'ahuachapan');
+addLayer('San Lorenzo', 'san_lorenzo');
+addLayer('Atiquizaya', 'atiquizaya');
+addLayer('El Refugio', 'el_refuigio');
+addLayer('Chalchuapa', 'chalchuapa');
+addLayer('El Porvenir', 'el_porvenir');
+
+
+// Builds the menu buttons
+function addLayer(name, id) {
+    var link = document.createElement('a');
+    link.href = '#';
+    link.className = 'active';
+    link.textContent = name;
+
+    link.onclick = function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        var visibility = map.getLayoutProperty(id, 'visibility');
+
+        if (visibility === 'visible') {
+            map.setLayoutProperty(id, 'visibility', 'none');
+            this.className = '';
+        } else {
+            this.className = 'active';
+            map.setLayoutProperty(id, 'visibility', 'visible');
+        }
+    };
+
+    var layers = document.getElementById('menu');
+    layers.appendChild(link);
+}
+
+// Polygon Popup
+map.on('click', function (e) {
+    var san_fran_men_features = map.queryRenderedFeatures(e.point, { layers: ['san_fran_men', 
+                                                                              'tacuba', 'ahuachapan', 
+                                                                              'san_lorenzo', 
+                                                                              'atiquizaya', 
+                                                                              'el_refuigio',
+                                                                              'chalchuapa',
+                                                                              'el_porvenir'
+                                                                              ] });
+    if (!san_fran_men_features.length) {
+        return;
+    }
+
+    var san_fran_men_feature = san_fran_men_features[0];
+
+    var san_fran_men_popup = new mapboxgl.Popup()
+        .setLngLat(map.unproject(e.point))
+        .setHTML("<strong>Nombre:</strong> " + san_fran_men_feature.properties.NOM_MUN + "<br /><strong>Población:</strong> " + san_fran_men_feature.properties.POB_TOTAL + "<br /><strong>Indice de Pobreza:</strong> " + san_fran_men_feature.properties.TASA_POBR + "<br /><strong>Pobreza FISDL:</strong> " + san_fran_men_feature.properties.POBR_FISDL )
+        .addTo(map);
+});
+
+map.on('click', function (e) {
+    var rio_features = map.queryRenderedFeatures(e.point, { layers: ['rio_la_paz',
+                                                                            'rio_magdalena_guevapa',
+                                                                            'rio_chingo_paz',
+                                                                            'rio_paz_small'
+                                                                            ] });
+    if (!rio_features.length) {
+        return;
+    }
+
+    var rio_feature = rio_features[0];
+
+    var rio_popup = new mapboxgl.Popup()
+        .setLngLat(map.unproject(e.point))
+        .setHTML( "<strong>" + rio_feature.properties.NOM + "</strong>" )
+        .addTo(map);
+});
+
+map.on('click', function (e) {
+    var zanjon_features = map.queryRenderedFeatures(e.point, { layers: ['zanjon_aguacate'] });
+    if (!zanjon_features.length) {
+        return;
+    }
+
+    var zanjon_feature = zanjon_features[0];
+
+    var zanjon_popup = new mapboxgl.Popup()
+        .setLngLat(map.unproject(e.point))
+        .setHTML( zanjon_feature.properties.NAME )
+        .addTo(map);
+});
+
+map.on('mousemove', function (e) {
+    var features = map.queryRenderedFeatures(e.point, { layers: ['san_fran_men', 
+                                                                 'tacuba', 
+                                                                 'ahuachapan', 
+                                                                 'san_lorenzo', 
+                                                                 'atiquizaya', 
+                                                                 'el_refuigio',
+                                                                 'chalchuapa',
+                                                                 'el_porvenir',
+                                                                 'rio_la_paz',
+                                                                 'rio_magdalena_guevapa',
+                                                                 'rio_chingo_paz',
+                                                                 'rio_paz_small',
+                                                                 'zanjon_aguacate'
+                                                                 ] });
+    map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
+});
+
+
+// Add zoom and rotation controls to the map.
+map.addControl(new mapboxgl.Navigation());
+
+</script>
+
+</body>
+</html>
